@@ -1,5 +1,8 @@
 package main
 
+import "main/golang0001"
+
 func main() {
-	println("sdfsdfsf")
+
+	golang0001.Rune_test()
 }
