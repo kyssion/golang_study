@@ -38,6 +38,27 @@ func test1() {
 	var _ complex64 = 2.0+10i;
 	var _ composite = 3.0+10i;
 
+	/* 常量 */
+	const item = 123;
+	fmt.Println(item)
+
+	/* 常量块 和 iota 实现二进制优化 */
+
+
+	const (
+		a, a1 = 1 << iota, 1<<iota - 1 //1<<0 1<<0 -1
+		b, b1       //1<<1 1<<1 -1
+		c, c1      //1<<2 1<<2 -1
+		d     = 123456 //iota 保持不变
+		_, d1 = 1 << iota, 1<<iota - 1 //1<<3 1<<3 -1
+		e, e1  //1<<4 1<<4 -1
+	)
+
+	//iota 每次使用将会+1 遇到const 将会重置
+
+	/* 特别的逻辑运算符 */
+	var test int = 1
+	var test = test &^2 ;// test 中的所有位和 2 的二进制进行比较，如果相同为0 不同则保留
 }	
 func jiqiao{
 	var a = 10;
