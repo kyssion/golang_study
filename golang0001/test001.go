@@ -1,9 +1,12 @@
+//Package golang0001 变量相关的
 package golang0001
 
 import (
+	"bytes"
 	"fmt"
 	"math"
 	"strconv"
+	"strings"
 	"unicode/utf8"
 )
 
@@ -83,6 +86,26 @@ func RuneTest() {
 
 	// 方法1 每次运算产生一个新的字符串性能差
 	var _ = "a" + "b" + "c"
-	//方法2
+	//方法2  使用Sprint 使用byte模板，内部逻辑复杂 比方法1 好
+	var _ = fmt.Sprintf("%s%s%s", "a", "b", "c")
+	//方法4 strings.join() 内部构建一个byte数组然后将字符一个一个进行填充
+	var _ = strings.Join([]string{"a", "b"}, ",")
+	//方法4 byte buffer 和 strings.builder buffer线程安全 build不是，build使用数组切片实现的，buffer使用byte实现的
+	// 都可以使用Grow() 来进行容量预估
+	var buffer bytes.Buffer
+	buffer.Grow(100)
+	buffer.WriteString("a")
+	var _ = buffer.String()
 
+	var builder strings.Builder
+	builder.Grow(100)
+	builder.WriteString("a")
+	var _ = builder.String()
+
+	// 字符串处理常用包
+
+	//1. strings - 基本功能：查询，替换，比较，截断，拆分，合并，开头结尾判断，索引查询，拼接，统计等
+	//2. bytes - 针对strings包中的东西提供byte级别的操作，因为string只读所有使用bytes可以降低string的复制提高性能
+	//3. strconv - 提供了类型互换和双引号转译等功能
+	//4. unicode - 提供了 isDigit isLetter isUpper isLower 等类似的功能用于字符串分类
 }
